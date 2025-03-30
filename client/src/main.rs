@@ -14,7 +14,7 @@ async fn main() {
 
     let config = load_config().unwrap();
 
-    let app = Router::new().route("/", get(|| async { "Hello, world!" }));
+    let app = Router::new().route("/health", get(|| async { "Hello, world!" }));
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
 

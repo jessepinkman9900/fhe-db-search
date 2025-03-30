@@ -6,7 +6,7 @@ use diesel::{prelude::*, r2d2::ConnectionManager, r2d2::PooledConnection};
 use r2d2::Pool;
 
 pub fn connect_db(config: &Config) -> Pool<ConnectionManager<PgConnection>> {
-    let manager = ConnectionManager::<PgConnection>::new(config.db_url());
+    let manager = ConnectionManager::<PgConnection>::new(config.database_url.clone());
     Pool::builder()
         .max_size(10)
         .build(manager)

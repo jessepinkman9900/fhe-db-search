@@ -1,12 +1,13 @@
 [toolchain]
 channel = "nightly"
+version = "1.85.1"
 components = [
     "cargo",
-    "clippy",
+    # "clippy",
     "rust-analyzer",
-    "rust-src",
+    # "rust-src",
     "rust-std",
     "rustc",
-    "rustfmt",
+    # "rustfmt",
 ]
-targets = ["wasm32-unknown-unknown"]
+# targets = ["wasm32-unknown-unknown"]

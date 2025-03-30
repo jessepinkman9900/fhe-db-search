@@ -3,7 +3,6 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: fhe-db-postgres
     environment:
       POSTGRES_USER: usr
       POSTGRES_PASSWORD: pwd
@@ -18,7 +17,6 @@ services:
 
   vault:
     image: hashicorp/vault:latest
-    container_name: fhe-db-vault
     ports:
       - "8200:8200"
     environment:
@@ -32,3 +30,41 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  
+  server:
+    image: ghcr.io/jessepinkman9900/fhe-db-search/server:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - vault
+    environment:
+      RUST_LOG: info
+      APP_DATABASE_URL: postgres://usr:pwd@postgres:5432/fhedb
+      APP_VAULT_ADDR: http://vault:8200
+      APP_VAULT_TOKEN: dev-only-token
+    healthcheck:
+      test: ["CMD", "server", "health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  client:
+    image: ghcr.io/jessepinkman9900/fhe-db-search/client:latest
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+      - vault
+    environment:
+      RUST_LOG: info
+      APP_DATABASE_URL: postgres://usr:pwd@postgres:5432/fhedb
+      APP_VAULT_ADDR: http://vault:8200
+      APP_VAULT_TOKEN: dev-only-token
+    healthcheck:
+      test: ["CMD", "client", "health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    
+    
