@@ -1,12 +1,12 @@
 # fhe-db-search
 
 ```bash
-# docker compose
+# docker compose - vault, postgres, migrations, server, client
 make run
 ```
 
 ```bash
-# cargo
-make clean-db
+# cargo run server + client & docker postgres + vault
+make run-local
 ```
 
