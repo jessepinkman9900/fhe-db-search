@@ -1,20 +1,21 @@
-.PHONY: help fmt clean-db bake kill-local
+.PHONY: help fmt clean-db bake kill-local run run-local build clean
 
 help:
 	@echo "Available targets:"
 	@echo "  help - Show this help"
 	@echo "  fmt - Format code"
-	@echo "  clean-db - Clean database"
+	@echo "  clean-db - new postgres container with diesel migrations applied"
 	@echo "  bake - Bake docker images"
 	@echo "  kill-local - Kill local server and client processes"
 	@echo "  run-local - Run server and client locally"
 	@echo "  run - Run server and client in docker"
+	@echo "  clean - Clean logs and target directories"
 
 fmt:
-	cargo fmt
+	@cargo fmt
 
 clean-db:
-	docker compose down && \
+	@docker compose down && \
 	docker compose up -d postgres vault && \
 	sleep 2 && \
 	cd database && \
@@ -23,13 +24,13 @@ clean-db:
 	cd -
 
 bake:
-	docker buildx bake
+	@docker buildx bake
 
 run: bake
-	docker compose up -d
+	@docker compose up -d
 
 build:
-	cargo build
+	@cargo build
 
 kill-local:
 	@echo "Killing existing server and client processes..."
@@ -43,3 +44,6 @@ run-local: kill-local clean-db build
 	echo "Starting client" && \
 	(cd client && set -a && . ./.env && set +a && exec cargo run > "../logs/$$TIMESTAMP/client.log" 2>&1 &) && \
 	echo "Logs will be available in logs/$$TIMESTAMP/"
+
+clean:
+	@echo "Deleting logs and target directories..." && rm -rf logs target

@@ -13,6 +13,19 @@ graph LR
 
 ## Usage
 ```bash
+make
+# Available targets:
+#   help - Show this help
+#   fmt - Format code
+#   clean-db - new postgres container with diesel migrations applied
+#   bake - Bake docker images
+#   kill-local - Kill local server and client processes
+#   run-local - Run server and client locally
+#   run - Run server and client in docker
+#   clean - Clean logs and target directories
+```
+
+```bash
 # docker compose - vault, postgres, migrations, server, client
 make run
 ```
