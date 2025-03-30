@@ -3,7 +3,7 @@
 # chef
 FROM rust:1.85.1-slim-bullseye AS chef 
 RUN cargo install cargo-chef 
-WORKDIR app
+WORKDIR /app
 
 # planner
 FROM chef AS planner

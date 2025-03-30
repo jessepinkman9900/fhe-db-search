@@ -1,10 +1,11 @@
-.PHONY: help fmt clean-db
+.PHONY: help fmt clean-db bake
 
 help:
 	@echo "Available targets:"
+	@echo "  help - Show this help"
 	@echo "  fmt - Format code"
 	@echo "  clean-db - Clean database"
-	@echo "  help - Show this help"
+	@echo "  bake - Bake docker images"
 
 fmt:
 	cargo fmt
@@ -17,3 +18,6 @@ clean-db:
 	set -a && source .env && set +a && \
 	diesel migration run && \
 	cd -
+
+bake:
+	docker buildx bake
