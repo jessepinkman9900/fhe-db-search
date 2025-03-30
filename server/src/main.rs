@@ -5,7 +5,6 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() {
-    // env_logger::init();
     tracing_subscriber::registry()
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env()
@@ -13,18 +12,16 @@ async fn main() {
         )
         .with(
             tracing_subscriber::fmt::layer()
-                .pretty()
-                .compact()
-                .with_file(false)
-                .with_line_number(false)
+                .with_ansi(false)
+                .with_target(true)
                 .with_thread_ids(true)
-                .with_ansi(true),
+                .with_level(true)
+                .with_file(true)
+                .with_line_number(true)
+                .compact(),
         )
         .init();
-    // let subscriber = tracing_subscriber::fmt().finish();
 
-    // // Set the subscriber as the global default
-    // tracing::subscriber::set_global_default(subscriber).unwrap();
     log::info!("Starting server");
 
     let config = config::load_config().unwrap();

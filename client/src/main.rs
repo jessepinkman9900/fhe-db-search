@@ -1,11 +1,12 @@
 mod config;
 
-use crate::config::load_config;
 use axum::{routing::get, Router};
 use config::Config;
 use serde::Serialize;
 use tfhe::{generate_keys, ConfigBuilder, PublicKey};
 use vaultrs::client::{VaultClient, VaultClientSettingsBuilder};
+
+use crate::config::load_config;
 
 #[tokio::main]
 async fn main() {

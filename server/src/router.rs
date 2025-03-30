@@ -1,22 +1,23 @@
-use crate::db;
-use axum::extract::State;
-use axum::http::HeaderMap;
-use axum::http::HeaderName;
-use axum::http::Request;
-use axum::response::IntoResponse;
-use axum::routing::get;
-use axum::routing::post;
-use axum::{Json, Router};
-use diesel::r2d2::ConnectionManager;
-use diesel::r2d2::Pool;
-use diesel::PgConnection;
+use axum::{
+    extract::State,
+    http::{HeaderMap, HeaderName, Request},
+    response::IntoResponse,
+    routing::{get, post},
+    Json, Router,
+};
+use diesel::{
+    r2d2::{ConnectionManager, Pool},
+    PgConnection,
+};
 use serde_json;
 use tower::ServiceBuilder;
 use tower_http::{
     request_id::{MakeRequestUuid, PropagateRequestIdLayer, SetRequestIdLayer},
     trace::TraceLayer,
 };
-use tracing::{error, info, info_span};
+use tracing::{error, info_span};
+
+use crate::db;
 
 #[derive(Debug, Clone)]
 pub struct AppState {

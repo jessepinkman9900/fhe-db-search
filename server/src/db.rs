@@ -1,9 +1,14 @@
-use crate::config::Config;
-use database::models::NewKV;
-use database::models::KV;
-use database::schema::kv::dsl as kvdsl;
-use diesel::{prelude::*, r2d2::ConnectionManager, r2d2::PooledConnection};
+use database::{
+    models::{NewKV, KV},
+    schema::kv::dsl as kvdsl,
+};
+use diesel::{
+    prelude::*,
+    r2d2::{ConnectionManager, PooledConnection},
+};
 use r2d2::Pool;
+
+use crate::config::Config;
 
 pub fn connect_db(config: &Config) -> Pool<ConnectionManager<PgConnection>> {
     let manager = ConnectionManager::<PgConnection>::new(config.database_url.clone());
