@@ -18,5 +18,5 @@ serde_json = { workspace = true }
 r2d2 = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
-tower = "0.5.2"
-tower-http = { version = "0.5", features = ["request-id", "trace"] }
+tower = { workspace = true }
+tower-http = { workspace = true }
