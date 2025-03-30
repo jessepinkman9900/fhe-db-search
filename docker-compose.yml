@@ -31,6 +31,10 @@ services:
   
   server:
     image: ghcr.io/jessepinkman9900/fhe-db-search/server:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: server
     ports:
       - "8080:8080"
     depends_on:
@@ -49,6 +53,10 @@ services:
 
   client:
     image: ghcr.io/jessepinkman9900/fhe-db-search/client:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: client
     ports:
       - "8081:8081"
     depends_on:
