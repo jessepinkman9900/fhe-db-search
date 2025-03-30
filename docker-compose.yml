@@ -13,6 +13,19 @@ services:
       timeout: 5s
       retries: 5
 
+  diesel-cli:
+    image: ghcr.io/jessepinkman9900/fhe-db-search/diesel-cli:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: diesel-cli
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://usr:pwd@postgres:5432/fhedb
+    command: migration run
+
   vault:
     image: hashicorp/vault:latest
     ports:
@@ -40,6 +53,7 @@ services:
     depends_on:
       - postgres
       - vault
+      - diesel-cli
     environment:
       RUST_LOG: info
       APP_DATABASE_URL: postgres://usr:pwd@postgres:5432/fhedb
@@ -62,6 +76,7 @@ services:
     depends_on:
       - postgres
       - vault
+      - diesel-cli
     environment:
       RUST_LOG: info
       APP_DATABASE_URL: postgres://usr:pwd@postgres:5432/fhedb
@@ -72,5 +87,3 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    
-    

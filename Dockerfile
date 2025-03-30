@@ -35,3 +35,14 @@ ENTRYPOINT ["server"]
 FROM debian:bullseye-slim AS client
 COPY --from=builder /app/target/release/client /usr/local/bin/
 ENTRYPOINT ["client"]
+
+# runtime - migrations
+FROM rust:1.85.1-slim-bullseye AS diesel-cli
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && cargo install diesel_cli --no-default-features --features postgres
+WORKDIR /app
+COPY database /app
+ENTRYPOINT ["diesel"]

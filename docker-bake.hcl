@@ -11,7 +11,7 @@ variable "BUILD_TAG" {
 }
 
 group "default" {
-  targets = ["server", "client"]
+  targets = ["server", "client", "diesel-cli"]
 }
 
 target "server" {
@@ -26,4 +26,11 @@ target "client" {
   dockerfile = "Dockerfile"
   target = "client"
   tags = ["${REGISTRY}/${REPO}/client:${BUILD_TAG}"]
+}
+
+target "diesel-cli" {
+  context = "."
+  dockerfile = "Dockerfile"
+  target = "diesel-cli"
+  tags = ["${REGISTRY}/${REPO}/diesel-cli:${BUILD_TAG}"]
 }
