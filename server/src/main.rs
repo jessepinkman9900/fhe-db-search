@@ -17,7 +17,8 @@ async fn main() {
                 .compact()
                 .with_file(false)
                 .with_line_number(false)
-                .with_thread_ids(true),
+                .with_thread_ids(true)
+                .with_ansi(true),
         )
         .init();
     // let subscriber = tracing_subscriber::fmt().finish();
