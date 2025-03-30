@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS kv (
+    id SERIAL PRIMARY KEY,
+    client_id VARCHAR(255) NOT NULL,
+    key VARCHAR(255) NOT NULL,
+    value VARCHAR(255) NOT NULL
+);
+    
